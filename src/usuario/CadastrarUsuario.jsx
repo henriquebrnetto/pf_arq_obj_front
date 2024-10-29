@@ -1,36 +1,36 @@
 import { useState } from 'react'
-import { Button, Grid, MenuItem, Select, TextField } from '@mui/material';
+import { Button, Grid2, MenuItem, Select, TextField } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
-function CadastrarBanda() {
+function CadastrarUsuario() {
 
   const [nome, setNome] = useState();
-  const [pais, setPais] = useState();
-  const [anoFormacao, setAnoFormacao] = useState();
-  const [idBiblioteca, setIdBiblioteca] = useState();
+  const [email, setEmail] = useState();
+  const [cidade, setCidade] = useState();
+  const [dataNascimento, setDataNascimento] = useState();
 
   function click() {
 
     const data = {
       'nome':  nome,
-      'pais': pais,
-      'anoFormacao': anoFormacao,
-      'biblioteca': {
-        'id': idBiblioteca
-      }
+      'email': email,
+      'cidade': cidade,
+      'dataNascimento' : dataNascimento      
     }
 
     console.log(data)
 
-    fetch('http://localhost:8080/api/v1/banda', {
+    fetch('http://localhost:8080/api/v1/usuario', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json'
       }
     }).then(response => {
-      alert('Banda cadastrada com sucesso')
+      alert('Usuário cadastrada com sucesso')
     }).catch(response => {
-      alert('Erro no cadastro da banda')
+      alert('Erro no cadastro da usuário')
     })
 
   }
@@ -38,49 +38,53 @@ function CadastrarBanda() {
   return (
     <>
 
-    <Grid container spacing={2}>
-      <Grid item xs={6}>
+    <Grid2 container spacing={2}>
+      <Grid2 item xs={6}>
         <TextField
           label='Nome: '
           value={nome}
           onChange={e => setNome(e.target.value)}
         />
-      </Grid>
-      <Grid item xs={6}>
+      </Grid2>
+
+      <Grid2 item xs={6}>
         <TextField
-          label='País: '
-          value={pais}
-          onChange={e => setPais(e.target.value)}
+          label='E-mail: '
+          value={email}
+          onChange={e => setEmail(e.target.value)}
         />
-      </Grid>
-      <Grid item xs={6}>
+      </Grid2>
+
+      <Grid2 item xs={6}>
         <TextField
-          label='Ano Formação: '
-          value={anoFormacao}
-          onChange={e => setAnoFormacao(e.target.value)}
+          label='Cidade: '
+          value={cidade}
+          onChange={e => setCidade(e.target.value)}
         />
-      </Grid>
-      <Grid item xs={12}>
-        <Select
-          label='Ano Formação: '
-          value={idBiblioteca}
-          onChange={e => setIdBiblioteca(e.target.value)}>
-          <MenuItem value='id1'>Biblioteca 1</MenuItem>
-          <MenuItem value='id2'>Biblioteca 2</MenuItem>
-          <MenuItem value='id3'>Biblioteca 3</MenuItem>
-        </Select>
-      </Grid>
-      <Grid item xs={12}>
+      </Grid2>
+
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <Grid2 item xs={12}>
+        <DatePicker
+        label="Data de Nascimento: "
+        value={dataNascimento}
+        onChange={e => setDataNascimento(e.target.value)}
+        />
+      </Grid2>
+      </LocalizationProvider>
+      
+
+      <Grid2 item xs={12}>
         <Button 
           onClick={() => click()}
           variant="contained"
           color="success"
         >Cadastrar</Button>
-        </Grid>
+      </Grid2>
 
-      </Grid>
+    </Grid2>
     </>
   )
 }
 
-export default CadastrarBanda
+export default CadastrarUsuario
