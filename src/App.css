@@ -40,3 +40,17 @@
 .read-the-docs {
   color: #888;
 }
+
+.header {
+  position: absolute;
+  width: 900px;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: lightgray;
+}
+
+.buttons {
+  padding: 20px;
+  display: inline-flex;
+}
