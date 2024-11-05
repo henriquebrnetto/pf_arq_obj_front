@@ -12,13 +12,13 @@ function CadastrarInscricao() {
   function click() {
 
     const data = {
-      'usuario':  usuario,
+      'usuario': usuario,
       'evento': evento
     }
 
     console.log(data)
 
-    fetch('http://localhost:8080/api/v1/inscricao', {
+    fetch('http://localhost:8081/projeto/v1/inscricao', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -34,7 +34,7 @@ function CadastrarInscricao() {
 
   function loadUsuario() {
 
-    fetch('http://localhost:8080/api/v1/usuario', {
+    fetch('http://localhost:8081/projeto/v1/usuario', {
       method: 'GET'
     }).then(response => {
       return response.json()
@@ -48,7 +48,7 @@ function CadastrarInscricao() {
 
   function loadEvento() {
 
-    fetch('http://localhost:8080/api/v1/evento', {
+    fetch('http://localhost:8081/projeto/v1/evento', {
       method: 'GET'
     }).then(response => {
       return response.json()
@@ -60,58 +60,60 @@ function CadastrarInscricao() {
 
   }
 
-  useEffect(() => {loadUsuario()
-                loadEvento()}, [])
+  useEffect(() => {
+    loadUsuario()
+    loadEvento()
+  }, [])
 
   return (
     <>
 
-    <Grid2 container spacing={3} direction='column'>
+      <Grid2 container spacing={3} direction='column'>
 
-      <Grid2 item xs={12}>
-        <InputLabel>Usuário</InputLabel>
-        <Select
-          fullWidth
-          value={usuario}
-          label='Usuário'
-          onChange={e => setUsuario(e.target.value)}
-          style={{ minWidth: 100 }}>
-              <MenuItem value="">
+        <Grid2 item xs={12}>
+          <InputLabel>Usuário</InputLabel>
+          <Select
+            fullWidth
+            value={usuario}
+            label='Usuário'
+            onChange={e => setUsuario(e.target.value)}
+            style={{ minWidth: 100 }}>
+            <MenuItem value="">
               <em>None</em>
             </MenuItem>
             {listaUsuario && listaUsuario.map((usuario, index) => {
-                return <MenuItem value={usuario.id}>{usuario.nome}</MenuItem>
-                })}
+              return <MenuItem value={usuario.id}>{usuario.nome}</MenuItem>
+            })}
           </Select>
-      </Grid2>
+        </Grid2>
 
-      <Grid2 item xs={12}>
-        <InputLabel>Evento</InputLabel> 
-        <Select
-          fullWidth
-          value={evento}
-          label='Evento'
-          onChange={e => setEvento(e.target.value)}
-          style={{ minWidth: 100 }}>
-              <MenuItem value="">
+        <Grid2 item xs={12}>
+          <InputLabel>Evento</InputLabel>
+          <Select
+            fullWidth
+            value={evento}
+            label='Evento'
+            onChange={e => setEvento(e.target.value)}
+            style={{ minWidth: 100 }}>
+            <MenuItem value="">
               <em>None</em>
             </MenuItem>
             {listaEvento && listaEvento.map((evento, index) => {
-                return <MenuItem value={evento.id}>{evento.nome}</MenuItem>
-                })}
+              return <MenuItem value={evento.id}>{evento.nome}</MenuItem>
+            })}
           </Select>
-      </Grid2>
+        </Grid2>
 
-      <Grid2 item xs={12}>
-        <Button 
-          onClick={() => click()}
-          variant="contained"
-          color="success"
-          fullWidth
-        >Cadastrar</Button>
-      </Grid2>
+        <Grid2 item xs={12}>
+          <Button
+            onClick={() => click()}
+            variant="contained"
+            color="success"
+            fullWidth
+          >Cadastrar</Button>
+        </Grid2>
 
-    </Grid2>
+      </Grid2>
     </>
   )
 }

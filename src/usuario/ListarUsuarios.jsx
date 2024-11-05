@@ -5,45 +5,46 @@ function ListarUsuario() {
     const [usuarios, setUsuarios] = useState([]);
     const [page, setPage] = useState(0)
     const [totalPages, setTotalPages] = useState(0)
+    const [selectedEmail, setSelectedEmail] = useState("")
 
     useEffect(() => {
         loadUsuarios(page);
         getNumberOfPages();
-      }, [page])
+    }, [page])
 
     function loadUsuarios(pageN, email) {
-        const url = `http://localhost:8080/api/v1/usuario?page=${pageN}${email ? `&email=${email}` : ''}`;
-        fetch(url,{
-                method:'GET', 
-            }).then(response => {
-                return response.json()
-            }).then(data => {
-                setUsuarios(data.content)
-            }).catch(response => {
-                alert('Erro na listagem dos usuarios')
-            })  
+        const url = `http://localhost:8081/projeto/v1/usuario?page=${pageN}${email ? `&email=${email}` : ''}`;
+        fetch(url, {
+            method: 'GET',
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+            setUsuarios(data.content)
+        }).catch(response => {
+            alert('Erro na listagem dos usuarios')
+        })
     }
 
     function deleteUser(id) {
-        fetch(`http://localhost:8080/api/v1/usuario/${id}`,{
-                method:'DELETE', 
-            }).then(response => {
-                loadUsuarios();
-            }).catch(response => {
-                alert('Erro na exclusao do usuario')
-            })  
+        fetch(`http://localhost:8081/projeto/v1/usuario/${id}`, {
+            method: 'DELETE',
+        }).then(response => {
+            loadUsuarios();
+        }).catch(response => {
+            alert('Erro na exclusao do usuario')
+        })
     }
 
     function getNumberOfPages() {
-        fetch('http://localhost:8080/api/v1/usuario/total-pages',{
-                method:'GET', 
-            }).then(response => {
-                return response.json()
-            }).then(data => {
-                setTotalPages(data.content)
-            }).catch(response => {
-                alert('Erro ao requerir numero total de paginas')
-            })  
+        fetch('http://localhost:8081/projeto/v1/usuario/total-pages', {
+            method: 'GET',
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+            setTotalPages(data.content)
+        }).catch(response => {
+            alert('Erro ao requerir numero total de paginas')
+        })
     }
 
     const handlePageChange = (event, value) => {
@@ -55,7 +56,7 @@ function ListarUsuario() {
     return (
         <>
             <Typography variant="h4">
-                Usuarios Cadastrados 
+                Usuarios Cadastrados
             </Typography>
 
             <Box mt={2}>
@@ -109,14 +110,14 @@ function ListarUsuario() {
 
             {usuarios.length > 1 ? (
                 <Box mt={2}>
-                    <Pagination count={totalPages} page={page + 1} onChange={handlePageChange}/>
-                 </Box>
-            ):(
+                    <Pagination count={totalPages} page={page + 1} onChange={handlePageChange} />
+                </Box>
+            ) : (
                 <></>
             )}
         </>
-        )
+    )
 
 }
-    
-    export default ListarUsuario
+
+export default ListarUsuario
